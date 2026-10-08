@@ -1,0 +1,184 @@
+
+<?php    
+require_once '../config/database.php';
+?>
+<?php $title = "Liste des classes"; ?>
+<?php require_once '../includes/header.php'; ?>
+
+<!-- CONTENT -->
+<?php
+
+$stmt = $db_connect->prepare("SELECT * FROM classes");
+$stmt->execute();
+$classes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+?>
+
+ 
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <style>
+        :root{
+            --sidebar-width:280px;
+            --primary:#0d6efd;
+        }
+
+        body{
+            background:#f5f7fb;
+            overflow-x:hidden;
+        }
+        .top-navbar{
+            background:white;
+            box-shadow:0 2px 15px rgba(0,0,0,.05);
+        }
+
+        .stat-card{
+            border:none;
+            border-radius:15px;
+            box-shadow:0 2px 10px rgba(0,0,0,.05);
+            transition:.3s;
+        }
+
+        .stat-card:hover{
+            transform:translateY(-3px);
+        }
+
+        .stat-icon{
+            width:55px;
+            height:55px;
+            border-radius:12px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            font-size:1.4rem;
+            background:rgba(13,110,253,.1);
+            color:var(--primary);
+        }
+
+        .card{
+            border:none;
+            border-radius:15px;
+        }
+
+        .overlay{
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,.4);
+            z-index:1030;
+            display:none;
+        }
+
+        @media(max-width:992px){
+
+            .sidebar{
+                left:-280px;
+            }
+
+            .sidebar.show{
+                left:0;
+            }
+
+            .main-content{
+                margin-left:0;
+            }
+
+            .overlay.show{
+                display:block;
+            }
+        }
+
+     .btn-supprimer, .btn-modifier {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    text-decoration: none;
+    color: white;
+}
+.btn-supprimer { background: #ef4444; }
+.btn-modifier { background: #f59e0b; }
+
+    </style>
+<div class="main-content">
+
+   
+    <!-- PAGE CONTENT -->
+    
+    <div class="container-fluid p-4">
+
+
+      
+
+        <div class="row">
+
+
+
+            <!-- TABLE -->
+            <div class="col-lg-12">
+
+                <div class="card shadow-sm">
+
+                    <div class="card-header bg-white py-3">
+                        <h5 class="mb-0">
+                            <i class="bi bi-list-task me-2"></i>
+                           Liste des étudiants
+                        </h5>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle">
+
+                                <thead>
+                                    <tr>
+                                        <th>Nom de la classe</th>
+                                        <th>Description</th>
+                                        <th>Date de création</th>
+                                        <th>Actions</th>
+                                       
+                                
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    <?php foreach ($classes as $classe) : ?>
+                                        <tr>
+                                            <td><?php echo $classe['name']; ?></td>
+                                            <td><?php echo $classe['description']; ?></td>
+                                            <td><?php echo $classe['created_at'] ; ?></td>
+                                           
+                                           
+                                            <td>
+                                               
+                <a href="../classes/delete.php?delete=<?= $classe['id'] ?>" class="btn-supprimer"
+                    onclick="return confirm('Supprimer cette tâche ?')">Supprimer</a>
+                <a href="../classes/edit.php?edit=<?= $classe['id'] ?>" class="btn-modifier">Modifier</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<?php require_once '../includes/footer.php'; ?>

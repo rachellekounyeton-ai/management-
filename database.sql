@@ -1,0 +1,35 @@
+CREATE DATABASE IF NOT EXISTS management  CHARACTER SET utf8;
+USE management;
+CREATE TABLE IF NOT EXISTS admins (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(100) NOT NULL,
+  password VARCHAR(225) NOT NULL
+
+);  
+
+INSERT INTO admins ( email, password) 
+VALUES ( 'managegement@example.com',  
+'$2y$10$f/ic694rrBX6333zSKJzi.1bjq/bVw1b9CFema7d1GCAKUT81Z7Fa'
+);
+
+CREATE TABLE IF NOT EXISTS classes (
+   id INT AUTO_INCREMENT PRIMARY KEY,
+   name VARCHAR(100) NOT NULL,
+   description TEXT ,
+   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  
+);
+
+CREATE TABLE IF NOT EXISTS students (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    phone VARCHAR(20),
+    birth_date DATE,
+    gender VARCHAR(10),
+    classes_id INT ,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    
+)
+
+ 
